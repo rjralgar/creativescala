@@ -187,6 +187,7 @@ object ShapesSequencesStars extends App {
     }
     closedPath(MoveTo(polar(radius, 0.degrees)) :: loop(sides, (360/sides).degrees))
   }
+  */
 
   def colorIteration(n: Int, initialColor: Color): Color = {
     n match {
@@ -195,6 +196,7 @@ object ShapesSequencesStars extends App {
     }
   }
 
+  /*
   def multiplePolygons(n: Int, initialRadius: Int, initialColor: Color): Image = {
     n match {
       case 0 => polygon(3, initialRadius) fillColor initialColor
@@ -204,6 +206,7 @@ object ShapesSequencesStars extends App {
 
   multiplePolygons(15, 20, Color.red).draw
   */
+
 
   def star(p: Int, n: Int, radius: Double): Image = {
     def loop(i: Int): List[PathElement] = {
@@ -231,7 +234,20 @@ object ShapesSequencesStars extends App {
 //  ).draw
 
   def allAbove(images: List[Image]): Image = {
-
+    images match {
+      case Nil => Image.empty
+      case hd :: tl => hd above allAbove(tl)
+    }
   }
+
+  allAbove(
+    (1 to 15).toList map { row =>
+      allBeside(
+        (1 to row).toList map { skip =>
+          star(2*row + 1, skip, 20) fillColor colorIteration(row, Color.red)
+        }
+      )
+    }
+  ).draw
 
 }
