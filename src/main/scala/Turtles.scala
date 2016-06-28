@@ -53,38 +53,38 @@ object Turtles extends App {
 
   val seed = forward(20) :: NoOp :: Nil
 
-  println(seed)
-
-  var inst = seed.map(i => rule(i)).flatten//.map(i => rule(i)).flatten
-
-  println(inst)
-
-  Turtle.draw(inst).draw
-
-  def tree(depth: Int, seed: List[Instruction], rule: Instruction => List[Instruction]): List[Instruction] = {
-    def iter(n: Int): List[Instruction] = {
-
-      n match {
-        case 0 => seed
-        case n => iter(n-1).map(i => rule(i)).flatten
-      }
-    }
-    iter(depth)
-  }
+//  println(seed)
+//
+//  var inst = seed.map(i => rule(i)).flatten//.map(i => rule(i)).flatten
+//
+//  println(inst)
+//
+//  Turtle.draw(inst).draw
+//
+//  def tree(depth: Int, seed: List[Instruction], rule: Instruction => List[Instruction]): List[Instruction] = {
+//    def iter(n: Int): List[Instruction] = {
+//
+//      n match {
+//        case 0 => seed
+//        case n => iter(n-1).map(i => rule(i)).flatten
+//      }
+//    }
+//    iter(depth)
+//  }
 
   // Issue - doesn't get inside the branches
 
-  def double[A](a: List[A]): List[A] = {
-    a.flatMap(a => List(a, a))
-  }
-
-  println(double(List(1,2,3,4)))
-
-  def nothing[A](a: List[A]): List[A] = {
-    a.flatMap(a => Nil)
-  }
-
-  println(nothing(List(1,2,3,4)))
+//  def double[A](a: List[A]): List[A] = {
+//    a.flatMap(a => List(a, a))
+//  }
+//
+//  println(double(List(1,2,3,4)))
+//
+//  def nothing[A](a: List[A]): List[A] = {
+//    a.flatMap(a => Nil)
+//  }
+//
+//  println(nothing(List(1,2,3,4)))
 
   def rewrite(instructions: List[Instruction], rule: Instruction => List[Instruction]): List[Instruction] = {
     instructions.flatMap(instruction => {
@@ -95,5 +95,18 @@ object Turtles extends App {
     })
   }
 
-  Turtle.draw(rewrite(rewrite(seed, rule),rule)).draw
+//  Turtle.draw(rewrite(rewrite(seed, rule),rule)).draw
+
+  def iterate(steps: Int,
+              seed: List[Instruction],
+              rule: Instruction => List[Instruction]): List[Instruction] = {
+    steps match {
+      case 0 => seed
+      case n => rewrite(iterate(n-1, seed, rule), rule)
+    }
+  }
+
+  // Question - is it better to write rewrite inside iterate, ie. keep the looping function on the 'outside'?
+
+  Turtle.draw(iterate(6, seed, rule)).draw
 }
