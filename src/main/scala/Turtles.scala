@@ -118,5 +118,27 @@ object Turtles extends App {
     Turtle.draw(image)
   }
 
-  polygon(15, 100.0).draw
+//  polygon(15, 100.0).draw
+
+  def squareSpiral(steps: Int, distance: Double, angle: Angle, increment: Double): Image = {
+    Turtle.draw((0 to steps).toList.flatMap(i => {
+      List(forward(distance+i*increment), turn(angle))
+    }))
+  }
+
+//  squareSpiral(100, 50.0, 89.degrees, 2.0).draw
+
+  def myRule(i: Instruction): List[Instruction] = {
+    i match {
+      case Forward(_) => List(forward(stepSize*0.5), forward(stepSize*0.5))
+      case NoOp => List(branch(turn(15.degrees), forward(stepSize), noop), branch(turn(-5.degrees), forward(stepSize), forward(stepSize), noop))
+      case other => List(other)
+    }
+  }
+
+  Turtle.draw(iterate(6, seed, myRule)).draw
+
+
 }
+
+
