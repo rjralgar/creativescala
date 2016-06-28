@@ -108,5 +108,15 @@ object Turtles extends App {
 
   // Question - is it better to write rewrite inside iterate, ie. keep the looping function on the 'outside'?
 
-  Turtle.draw(iterate(6, seed, rule)).draw
+//  Turtle.draw(iterate(6, seed, rule)).draw
+
+  def polygon(sides: Int, sideLength: Double): Image = {
+    val angle = (360/sides).degrees
+    val image = Range(0, sides).toList.flatMap(i => {
+      List(forward(sideLength), turn(angle))
+    })
+    Turtle.draw(image)
+  }
+
+  polygon(15, 100.0).draw
 }
