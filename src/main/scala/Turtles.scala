@@ -138,6 +138,18 @@ object Turtles extends App {
 
   Turtle.draw(iterate(6, seed, myRule)).draw
 
+  def kochRule(instructions: List[Instruction]): List[Instruction] = {
+    List(instructions, List(turn(45.degrees)), instructions, List(turn(-90.degrees)), instructions, List(turn(45.degrees)), instructions).flatten
+  }
+
+  def iterates(steps: Int, seed: List[Instruction], rule: List[Instruction] => List[Instruction]): List[Instruction] = {
+    steps match {
+      case 0 => seed
+      case n => rule(iterates(n-1, seed, rule))
+    }
+  }
+
+  Turtle.draw(iterates(6, List(forward(2.0)), kochRule)).draw
 
 }
 
