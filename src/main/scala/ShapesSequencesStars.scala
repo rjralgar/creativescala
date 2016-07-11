@@ -89,20 +89,20 @@ object ShapesSequencesStars extends App {
   }
 
   print(descending(15))
-
+*/
   def ascending(n: Int): List[Int] = {
     // TODO: Deal with n<0 ?
-    def loop(len: Int, i: Int): List[Int] = {
+    def loop(i: Int): List[Int] = {
       i match {
         case 0 => Nil
-        case i => len - i + 1 :: loop(len, i-1)
+        case i => n - i + 1 :: loop(i-1)
       }
     }
-    loop(n,n)
+    loop(n)
   }
 
   print(ascending(7))
-  */
+
 
   /*
   def fill[A](n: Int, a:A): List[A] = {
@@ -189,12 +189,14 @@ object ShapesSequencesStars extends App {
   }
   */
 
+  /*
   def colorIteration(n: Int, initialColor: Color): Color = {
     n match {
       case 0 => initialColor
       case n => initialColor.spin((n*5).degrees)
     }
   }
+  */
 
   /*
   def multiplePolygons(n: Int, initialRadius: Int, initialColor: Color): Image = {
@@ -207,7 +209,7 @@ object ShapesSequencesStars extends App {
   multiplePolygons(15, 20, Color.red).draw
   */
 
-
+/*
   def star(p: Int, n: Int, radius: Double): Image = {
     def loop(i: Int): List[PathElement] = {
       i match {
@@ -249,5 +251,5 @@ object ShapesSequencesStars extends App {
       )
     }
   ).draw
-
+*/
 }
